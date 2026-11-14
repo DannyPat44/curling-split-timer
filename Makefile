@@ -9,7 +9,7 @@ DEVICE ?= fr265
 KEY ?= developer_key.der
 APP := Curling
 
-.PHONY: build run install package test icon sim-tools fit demo screens
+.PHONY: build run install package test icon sim-tools fit demo screens video
 
 build:
 	"$(SDK)bin/monkeyc" -f monkey.jungle -d $(DEVICE) -y "$(KEY)" -o bin/$(APP).prg -w
@@ -77,3 +77,8 @@ demo:
 # The demo on every watch in the manifest, captured to bin/screens/<watch>-*.png
 screens: bin/sim
 	tools/screens_all.sh
+
+# The store's demo video: a scripted game recorded in the simulator, with
+# captions (tools/record_video.sh). Copy bin/video/curling-demo.mp4 to store/demo.mp4.
+video: bin/sim
+	tools/record_video.sh

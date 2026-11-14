@@ -1,0 +1,12 @@
+-0.83 3.80 Start as the rock crosses the back line
+3.80 5.30 Start at the hog line: the split, and where it will stop
+5.30 6.51 Up: place the rock to log it
+6.51 7.71 Down: it stopped a little deeper
+7.71 9.33 Start: logged, and the watch learns the ice
+9.33 11.47 Hold Up for a hit. Then your own rocks:
+11.47 13.07 Made the shot you called?
+13.07 14.64 Or missed it?
+14.64 18.59 The next rock slides back as the split slows
+18.59 20.09 Start at the hog line
+20.09 22.90 Up, then Start: logged where it was predicted
+22.90 27.47 Down: the team list, with your shots made

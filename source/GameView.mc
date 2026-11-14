@@ -125,6 +125,77 @@ class GameView extends WatchUi.View {
     public function onLayout(dc as Dc) as Void {
         _sheet = new SheetFace();
         startDemo();
+        startVideo();
+    }
+
+    // The video build (make video) plays a scripted game by pressing the
+    // same buttons a player would, for the store's demo video
+    private var _videoTimer as Timer.Timer? = null;
+    private var _videoStep as Number = 0;
+
+    //! Each step: how long to wait (ms), then the button (or answer)
+    (:video)
+    private function videoScript() as Array<Array> {
+        return [
+            [1500, :start], [3800, :start],              // the lead's first rock: 3.80
+            [1500, :up], [1200, :down], [1200, :start],  // place it a ring deeper, log it
+            [1600, :holdUp],                             // the lead's second: a hit
+            [2200, :made], [1600, :missed],              // my two rocks (I play second)
+            [1500, :start], [3950, :start],              // the vice's first rock
+            [1500, :up], [1200, :start],                 // log it where predicted
+            [1600, :down], [4000, :none],                // the team list
+        ] as Array<Array>;
+    }
+
+    (:video)
+    private function startVideo() as Void {
+        if (_videoTimer != null) {
+            return;
+        }
+        _session.setMyPosition(1);
+        _videoTimer = new Timer.Timer();
+        waitToRecord();
+    }
+
+    // The simulator may still be closing the last app's activity: start
+    // the script once this one records
+    (:video)
+    function waitToRecord() as Void {
+        _session.onStart();
+        if (_session.isSessionRecording()) {
+            WatchUi.requestUpdate();
+            nextVideoStep();
+        } else {
+            (_videoTimer as Timer.Timer).start(method(:waitToRecord), 500, false);
+        }
+    }
+
+    (:novideo)
+    private function startVideo() as Void {
+    }
+
+    (:video)
+    private function nextVideoStep() as Void {
+        var script = videoScript();
+        if (_videoStep >= script.size()) {
+            return;
+        }
+        var timer = _videoTimer as Timer.Timer;
+        timer.start(method(:playVideoStep), script[_videoStep][0] as Number, false);
+    }
+
+    (:video)
+    function playVideoStep() as Void {
+        var key = videoScript()[_videoStep][1] as Symbol;
+        _videoStep++;
+        if (key == :made || key == :missed) {
+            // Answer the open "My rock" question as a player would
+            WatchUi.popView(WatchUi.SLIDE_DOWN);
+            onMyShot(key == :made ? Game.MADE : Game.MISSED);
+        } else if (key != :none) {
+            press(key);
+        }
+        nextVideoStep();
     }
 
     // The demo build (make demo) sets a game up by itself, for checking the
