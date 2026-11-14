@@ -160,6 +160,26 @@ The team list (Down) shows the score and line score, your shots made this
 game and over your last 10 saved games, each teammate's average draw split,
 rocks and hits, then the last five rocks.
 
+## Practice timings to curling.dimmit.net
+
+Curlers at Granite Curling Club of Seattle can send every rock they time to
+their practice session on [curling.dimmit.net](https://curling.dimmit.net/practice),
+where it's matched to the throw the club's cameras saw and shown next to it.
+
+1. On curling.dimmit.net/practice, sign in, open **Sensor app keys** and make a
+   key (it starts with `csk_` and is shown once).
+2. In the Garmin Connect app on your phone, open this app's settings, switch on
+   **Send practice timings** and paste the key into **Sensor app key**.
+3. Start a practice session on the site, then time rocks as usual. Each split
+   goes through your phone as you stop the timer, logged or not.
+
+The timings go to the session of whoever made the key, so use the thrower's
+key. Settings on the watch shows how it's going: waiting for the phone,
+waiting for a practice session, sent, or the key refused. Timings wait on the
+watch while the phone is out of reach, and are dropped after 30 minutes if
+there's no session to put them in. Sending uses the site's
+[sensor app API](https://github.com/wdimmit/curling_stats/blob/main/docs/sensor-app-api.md).
+
 ## How the split predicts where a rock stops
 
 The split is the rock's average speed over the 27 ft from the back line to the
@@ -257,6 +277,7 @@ make package   # build the .iq for the Connect IQ store
 make icon      # redraw the launcher icons, one per watch size (tools/rock_icon.swift)
 make demo      # a demo game on one watch in the simulator (DEVICE=fr255 for another)
 make screens   # the demo on every supported watch, captured to bin/screens
+make sync-sim  # the app in the simulator with your curling.dimmit.net key from the Keychain (tools/sync_sim.sh)
 make video     # the store's demo video: a scripted game recorded with captions (tools/record_video.sh)
 make sim-tools # build bin/sim, which presses the simulator's buttons and captures the screen
 make fit       # the lap and summary fields of the newest simulator game (FIT=file for another)

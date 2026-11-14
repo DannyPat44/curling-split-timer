@@ -9,7 +9,7 @@ DEVICE ?= fr265
 KEY ?= developer_key.der
 APP := Curling
 
-.PHONY: build run install package test icon sim-tools fit demo screens video
+.PHONY: build run install package test icon sim-tools fit demo screens video sync-sim sync-install
 
 build:
 	"$(SDK)bin/monkeyc" -f monkey.jungle -d $(DEVICE) -y "$(KEY)" -o bin/$(APP).prg -w
@@ -25,6 +25,7 @@ run: build
 # checked for every game field (tools/check_test_activity.py).
 ACTIVITIES = $${TMPDIR}com.garmin.connectiq/GARMIN/Activities
 test: bin/venv
+	@tools/check_secrets.sh
 	"$(SDK)bin/monkeyc" -f monkey.jungle -d $(DEVICE) -y "$(KEY)" -o bin/$(APP)Test.prg -w -t
 	$(SIMULATOR)
 	@touch bin/test-started
@@ -82,3 +83,13 @@ screens: bin/sim
 # captions (tools/record_video.sh). Copy bin/video/curling-demo.mp4 to store/demo.mp4.
 video: bin/sim
 	tools/record_video.sh
+
+# The app in the simulator with your curling.dimmit.net key from the Keychain,
+# sending real practice timings (tools/sync_sim.sh)
+sync-sim:
+	tools/sync_sim.sh
+
+# The same on a USB-connected watch (sideloaded apps get no settings in
+# Garmin Connect, so the key is built in; it stays in bin/ and on the watch)
+sync-install:
+	tools/sync_sim.sh install

@@ -130,8 +130,8 @@ class GameView extends WatchUi.View {
 
     // The video build (make video) plays a scripted game by pressing the
     // same buttons a player would, for the store's demo video
-    private var _videoTimer as Timer.Timer? = null;
-    private var _videoStep as Number = 0;
+    (:video) private var _videoTimer as Timer.Timer? = null;
+    (:video) private var _videoStep as Number = 0;
 
     //! Each step: how long to wait (ms), then the button (or answer)
     (:video)
@@ -201,7 +201,7 @@ class GameView extends WatchUi.View {
     // The demo build (make demo) sets a game up by itself, for checking the
     // screens on every watch and for store screenshots; other builds leave
     // it out (monkey.jungle excludes :demo)
-    private var _demoTimer as Timer.Timer? = null;
+    (:demo) private var _demoTimer as Timer.Timer? = null;
 
     (:demo)
     private function startDemo() as Void {
@@ -227,8 +227,8 @@ class GameView extends WatchUi.View {
 
     // The simulator can still be closing the last app's activity: try again
     // every half second (one timer: apps get only a few) until this records
-    private var _demoRetry as Timer.Timer? = null;
-    private var _demoTries as Number = 0;
+    (:demo) private var _demoRetry as Timer.Timer? = null;
+    (:demo) private var _demoTries as Number = 0;
 
     (:demo)
     function retryDemoRecording() as Void {
@@ -549,7 +549,8 @@ class GameView extends WatchUi.View {
     }
 
     public function showSettings() as Void {
-        WatchUi.pushView(Menus.settings(), new SettingsDelegate(method(:onMyPosition)), WatchUi.SLIDE_UP);
+        var sync = _session.practiceSync();
+        WatchUi.pushView(Menus.settings(sync), new SettingsDelegate(method(:onMyPosition), sync), WatchUi.SLIDE_UP);
     }
 
     //! Skipping the wearer's rocks can finish the end; its score is asked
@@ -708,6 +709,13 @@ class GameView extends WatchUi.View {
         if (_ticks == 0 || _session.isStopwatchRunning()) {
             WatchUi.requestUpdate();
         }
+    }
+
+    //! The app's settings changed in Garmin Connect: the practice key may now
+    //! be there, so send anything waiting
+    function settingsChanged() as Void {
+        _session.practiceSync().send();
+        WatchUi.requestUpdate();
     }
 
     //! The app is closing: pause the game, which is saved as it goes

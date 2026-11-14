@@ -1,0 +1,10 @@
+<settings>
+    <group id="dimmit" title="@Strings.dimmit_group" description="@Strings.dimmit_description">
+        <setting propertyKey="@Properties.dimmitSync" title="@Strings.dimmit_sync_title">
+            <settingConfig type="boolean" />
+        </setting>
+        <setting propertyKey="@Properties.dimmitKey" title="@Strings.dimmit_key_title" prompt="@Strings.dimmit_key_prompt">
+            <settingConfig type="password" maxLength="100" />
+        </setting>
+    </group>
+</settings>

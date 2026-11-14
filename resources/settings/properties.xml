@@ -1,0 +1,7 @@
+<!-- App settings, changed in the Garmin Connect app. The sensor app key is
+     typed in there by the player and kept on the watch: it must never be put
+     here (this file is public). -->
+<properties>
+    <property id="dimmitSync" type="boolean">false</property>
+    <property id="dimmitKey" type="string"></property>
+</properties>

@@ -73,5 +73,8 @@ and the `"positions"` count in a saved game) and test it.
   in the manifest. A new watch needs its device files from the SDK Manager,
   a line in the manifest, a launcher icon size in the jungles if it isn't
   60 px, and a look with `make screens`.
-- Never commit Garmin's SDK or device files, or a developer key: the repo
-  is public.
+- Never commit Garmin's SDK or device files, a developer key, or a
+  curling.dimmit.net sensor app key: the repo is public. The sensor key is an
+  app setting the player types in Garmin Connect (default empty); for the
+  simulator, `make sync-sim` reads it from the Keychain into `bin/`.
+  `make test` fails if anything tracked looks like a `csk_` key.
