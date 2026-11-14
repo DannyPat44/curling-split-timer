@@ -5,7 +5,9 @@ curling. Press Start as a rock crosses the back line and again at the hog
 line: the watch shows the split and where the rock should stop. Tell it where
 the rock actually stopped and its predictions learn the day's ice.
 
-It runs on the Forerunner 265, and is meant for club play (see
+It runs on Garmin watches with five buttons: Forerunner 165, 255, 265, 570,
+955, 965 and 970, fēnix 7 (all versions), epix (Gen 2 and Pro) and Enduro 3.
+It's meant for club play (see
 [Is it legal in a game?](#is-it-legal-in-a-game)). Free software under the
 GPL 3.0.
 
@@ -234,7 +236,7 @@ own rules decide.
 
 ## Development
 
-Needs the Connect IQ SDK (with the Forerunner 265 device from its SDK
+Needs the Connect IQ SDK (with the watches' device files from its SDK
 Manager), Java 17, and a Connect IQ developer key. Point `KEY` at the key on
 the command line or in a `local.mk` next to the Makefile (not committed):
 
@@ -247,14 +249,16 @@ make run       # build and open in the simulator
 make test      # unit tests (test/) in the simulator, and a check of the activity one saves; TEST=name runs one
 make install   # copy onto a USB-connected watch's GARMIN/Apps folder (brew install libmtp)
 make package   # build the .iq for the Connect IQ store
-make icon      # redraw the launcher icon (tools/rock_icon.swift)
+make icon      # redraw the launcher icons, one per watch size (tools/rock_icon.swift)
+make demo      # a demo game on one watch in the simulator (DEVICE=fr255 for another)
+make screens   # the demo on every supported watch, captured to bin/screens
 make sim-tools # build bin/sim, which presses the simulator's buttons and captures the screen
 make fit       # the lap and summary fields of the newest simulator game (FIT=file for another)
 ```
 
 After a change to what the watch shows, check the screens in the simulator
 too: `make run`, then `. tools/screens.sh` and `press`/`shot` through the
-flow.
+flow, and `make screens` for every watch size.
 
 | File | What it does |
 |---|---|

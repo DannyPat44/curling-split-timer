@@ -124,6 +124,59 @@ class GameView extends WatchUi.View {
 
     public function onLayout(dc as Dc) as Void {
         _sheet = new SheetFace();
+        startDemo();
+    }
+
+    // The demo build (make demo) sets a game up by itself, for checking the
+    // screens on every watch and for store screenshots; other builds leave
+    // it out (monkey.jungle excludes :demo)
+    private var _demoTimer as Timer.Timer? = null;
+
+    (:demo)
+    private function startDemo() as Void {
+        if (_demoTimer != null) {
+            return;
+        }
+        _session.onStart();
+        // The wearer plays second: the lead's two rocks are logged, the
+        // wearer's two are marked, and the vice's first is being placed
+        _session.setMyPosition(1);
+        _session.demoLog(3780, SplitTable.BUTTON);
+        _session.demoLog(3870, 6);
+        _session.markMine(2, Game.MADE);
+        _session.markMine(3, Game.MISSED);
+        _session.demoSplit(3840, 160);
+        _placing = _session.getStopwatchEstimate();
+        // Then the team list (tools/screens_all.sh captures both)
+        var timer = new Timer.Timer();
+        _demoTimer = timer;
+        timer.start(method(:showStats), 10000, false);
+        retryDemoRecording();
+    }
+
+    // The simulator can still be closing the last app's activity: try again
+    // every half second (one timer: apps get only a few) until this records
+    private var _demoRetry as Timer.Timer? = null;
+    private var _demoTries as Number = 0;
+
+    (:demo)
+    function retryDemoRecording() as Void {
+        if (_session.isSessionRecording() || _demoTries >= 20) {
+            return;
+        }
+        _demoTries++;
+        _session.onStart();
+        var retry = _demoRetry;
+        if (retry == null) {
+            retry = new Timer.Timer();
+            _demoRetry = retry;
+        }
+        retry.start(method(:retryDemoRecording), 500, false);
+        WatchUi.requestUpdate();
+    }
+
+    (:nodemo)
+    private function startDemo() as Void {
     }
 
     private var _keys as KeyFilter = new KeyFilter();
