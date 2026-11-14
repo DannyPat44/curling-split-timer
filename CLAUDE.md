@@ -1,7 +1,8 @@
 # Curling app
 
-A Connect IQ watch app for the Forerunner 265. The README covers how it's
-played, the code layout and `make` targets.
+A Connect IQ watch app for five-button Garmin watches (the list is in
+manifest.xml). The README covers how it's played, the code layout and `make`
+targets.
 
 ## After every change to the app
 
@@ -16,6 +17,9 @@ to what the watch shows or records:
    capturing each screen with `shot` and looking at it (`tile` puts several
    side by side). Check every new or changed screen, menu and prompt, and the
    game screen before and after.
+   For anything drawn on the game screen, also run `make screens` (the demo
+   build on every watch, 218 to 454 px, MIP and AMOLED) and look at the
+   captures; `swift tools/montage.swift out.png a.png b.png ...` lines them up.
 3. If the change touches the activity (`GameFields`, `fitcontributions.xml`,
    saving): save a game in the simulator and run `make fit` to see the lap and
    summary fields that were actually written.
@@ -62,6 +66,9 @@ and the `"positions"` count in a saved game) and test it.
 ## Install and publish
 
 - `make install` copies the build onto the USB-connected watch.
-- `make package` builds the `.iq` for the Connect IQ store.
+- `make package` builds the `.iq` for the Connect IQ store, for every watch
+  in the manifest. A new watch needs its device files from the SDK Manager,
+  a line in the manifest, a launcher icon size in the jungles if it isn't
+  60 px, and a look with `make screens`.
 - Never commit Garmin's SDK or device files, or a developer key: the repo
   is public.

@@ -223,9 +223,11 @@ module Menus {
         if (game.mine() >= 0) {
             var shots = game.myShots();
             var recent = Accuracy.percent(accuracy, 10);
-            var label = "Me  " + shots[0] + "/" + shots[1] + " made"
-                + (shots[1] > 0 ? " · " + Labels.shots(Game.madePercent(shots[0], shots[1])) : "");
-            var sublabel = recent >= 0 ? "last 10 games " + recent + "%" : "this game";
+            var label = shots[1] > 0
+                ? "Me  " + shots[0] + "/" + shots[1] + " made · " + Labels.shots(Game.madePercent(shots[0], shots[1]))
+                : "Me";
+            var sublabel = recent >= 0 ? "last 10 games " + recent + "%"
+                : (shots[1] > 0 ? "this game" : "no shots marked yet");
             menu.addItem(new WatchUi.MenuItem(label, sublabel, :me, null));
         }
         for (var player = 0; player < game.players(); ++player) {

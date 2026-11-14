@@ -50,9 +50,11 @@ class SheetFace {
         }
 
         if (o[:prompt] == true) {
+            // Mid-game the prompt sits under the end line, where the split
+            // goes, and smaller so it clears it on small screens
             dc.setColor(Graphics.COLOR_WHITE, Graphics.COLOR_TRANSPARENT);
-            dc.drawText(w / 2, h * 0.27, Graphics.FONT_MEDIUM, o[:big] as String,
-                Graphics.TEXT_JUSTIFY_CENTER | Graphics.TEXT_JUSTIFY_VCENTER);
+            dc.drawText(w / 2, end > 0 ? h * 0.335 : h * 0.27, end > 0 ? Graphics.FONT_SMALL : Graphics.FONT_MEDIUM,
+                o[:big] as String, Graphics.TEXT_JUSTIFY_CENTER | Graphics.TEXT_JUSTIFY_VCENTER);
         } else {
             dc.setColor(o[:dim] == true ? Graphics.COLOR_DK_GRAY : Graphics.COLOR_WHITE, Graphics.COLOR_TRANSPARENT);
             var font = Graphics.FONT_NUMBER_HOT;

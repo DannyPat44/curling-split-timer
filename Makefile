@@ -9,7 +9,7 @@ DEVICE ?= fr265
 KEY ?= developer_key.der
 APP := Curling
 
-.PHONY: build run install package test icon sim-tools fit
+.PHONY: build run install package test icon sim-tools fit demo screens
 
 build:
 	"$(SDK)bin/monkeyc" -f monkey.jungle -d $(DEVICE) -y "$(KEY)" -o bin/$(APP).prg -w
@@ -48,6 +48,7 @@ package:
 # Redraw the launcher icon: a flat side-view curling rock
 icon:
 	swift tools/rock_icon.swift resources/drawables/launcher_icon.png 60
+	for n in 40 54 65; do swift tools/rock_icon.swift resources-icons/$$n/drawables/launcher_icon.png $$n; done
 
 # Screen checks: press the simulator's buttons and capture the watch (see
 # tools/screens.sh). Needs Accessibility and Screen Recording for the terminal.
@@ -65,3 +66,14 @@ fit: bin/venv
 
 bin/venv:
 	python3 -m venv bin/venv && bin/venv/bin/pip -q install fitparse
+
+# The demo build on one watch in the simulator: a game sets itself up, then
+# the team list shows (DEVICE=fr255 for another watch)
+demo:
+	"$(SDK)bin/monkeyc" -f demo.jungle -d $(DEVICE) -y "$(KEY)" -o bin/Demo-$(DEVICE).prg -w
+	$(SIMULATOR)
+	"$(SDK)bin/monkeydo" bin/Demo-$(DEVICE).prg $(DEVICE) &
+
+# The demo on every watch in the manifest, captured to bin/screens/<watch>-*.png
+screens: bin/sim
+	tools/screens_all.sh

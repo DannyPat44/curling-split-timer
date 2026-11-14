@@ -355,6 +355,21 @@ class GameSession {
         changed();
     }
 
+    //! Demo build: log a rock as if it had been timed at `split`
+    (:demo)
+    function demoLog(split as Number, position as Number) as Void {
+        demoSplit(split, _endStrokes + 60);
+        addSplit(position);
+    }
+
+    //! Demo build: a split waiting to be logged, and the end's strokes so far
+    (:demo)
+    function demoSplit(split as Number, strokes as Number) as Void {
+        _split = split;
+        _splitLogged = false;
+        _endStrokes = strokes;
+    }
+
     // ---------------------------------------------------------------- the ice
 
     //! Forget one thrower's ice marks (see Game.thrower), say someone whose
