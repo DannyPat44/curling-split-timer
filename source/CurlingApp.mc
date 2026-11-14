@@ -17,6 +17,13 @@ class CurlingApp extends Application.AppBase {
         return [game, new GameDelegate(game)];
     }
 
+    function onSettingsChanged() as Void {
+        var game = _game;
+        if (game != null) {
+            game.settingsChanged();
+        }
+    }
+
     function onStop(state as Dictionary?) as Void {
         var game = _game;
         if (game != null) {

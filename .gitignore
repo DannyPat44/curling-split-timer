@@ -6,3 +6,6 @@ local.mk
 *.der
 .DS_Store
 build/
+# curling.dimmit.net sensor app keys: never commit one (make test checks)
+.dimmit-key
+*.csk

@@ -39,6 +39,8 @@ class GameSession {
     private var _accelerometerLog as SensorLogger? = null;
 
     private var _sweeps as SweepCounter;
+    // Timed rocks to curling.dimmit.net's practice page, when switched on
+    private var _sync as PracticeSync = new PracticeSync();
     private var _samplesPerSecond as Number;
     private var _endStrokes as Number = 0;
     private var _gameStrokes as Number = 0;
@@ -66,6 +68,12 @@ class GameSession {
         }
         _table = new SplitTable(loadMarks());
         _game.setMyPosition(Settings.myPosition());
+        // Anything still waiting from last time
+        _sync.send();
+    }
+
+    function practiceSync() as PracticeSync {
+        return _sync;
     }
 
     function getGame() as Game {
@@ -212,11 +220,14 @@ class GameSession {
         _loggedPosition = -1;
     }
 
-    //! The hog line: stop timing. The split waits to be logged.
+    //! The hog line: stop timing. The split waits to be logged, and goes to
+    //! curling.dimmit.net if that's on (any rock timed, logged or not).
     function stopTimer() as Void {
         if (isStopwatchRunning()) {
+            var hog = System.getTimer();
             getStopwatchValue();
             _startedAt = 0;
+            _sync.timed(_split, hog);
         }
     }
 

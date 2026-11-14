@@ -23,4 +23,9 @@
     <string id="unit_percent">%</string>
     <string id="game_label">Game</string>
     <string id="unit_none"> </string>
+    <string id="dimmit_group">curling.dimmit.net practice</string>
+    <string id="dimmit_description">Send each rock you time to your practice session on curling.dimmit.net, where it's matched to the throw the club's cameras saw.</string>
+    <string id="dimmit_sync_title">Send practice timings</string>
+    <string id="dimmit_key_title">Sensor app key</string>
+    <string id="dimmit_key_prompt">Make a key at curling.dimmit.net/practice (Sensor app keys) and paste it here. It starts with csk_.</string>
 </strings>

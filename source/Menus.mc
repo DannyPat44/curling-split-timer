@@ -39,10 +39,12 @@ class InfoDelegate extends WatchUi.Menu2InputDelegate {
 //! is told about a new position.
 class SettingsDelegate extends WatchUi.Menu2InputDelegate {
     private var _onPosition as Method(position as Number) as Void;
+    private var _sync as PracticeSync;
 
-    function initialize(onPosition as Method(position as Number) as Void) {
+    function initialize(onPosition as Method(position as Number) as Void, sync as PracticeSync) {
         Menu2InputDelegate.initialize();
         _onPosition = onPosition;
+        _sync = sync;
     }
 
     function onSelect(item as WatchUi.MenuItem) as Void {
@@ -54,6 +56,11 @@ class SettingsDelegate extends WatchUi.Menu2InputDelegate {
             _onPosition.invoke(position);
         } else if (key.equals(Settings.FORMAT)) {
             item.setSubLabel(Menus.formatSubLabel(Settings.nextFormat()));
+            WatchUi.requestUpdate();
+        } else if (key.equals(Menus.SYNC_ITEM)) {
+            // Try sending what's waiting now
+            _sync.send();
+            item.setSubLabel(Menus.syncStatus(_sync));
             WatchUi.requestUpdate();
         } else {
             Settings.toggle(key);
@@ -172,8 +179,31 @@ module Menus {
         return menu;
     }
 
+    const SYNC_ITEM = "dimmit";
+
+    //! curling.dimmit.net practice timings: how they're doing
+    function syncStatus(sync as PracticeSync) as String {
+        var queue = sync.queue();
+        if (sync.needsKey()) {
+            return "Add your key in Garmin Connect";
+        }
+        if (!sync.isOn()) {
+            return "Off (switch on in Garmin Connect)";
+        }
+        var waiting = queue.waiting();
+        var status = queue.status();
+        if (status == SensorQueue.BAD_KEY) {
+            return "Key refused: check it";
+        } else if (waiting > 0 && status == SensorQueue.NO_SESSION) {
+            return waiting + " waiting: start a practice session";
+        } else if (waiting > 0) {
+            return waiting + " waiting for the phone";
+        }
+        return queue.sent() > 0 ? "On · " + queue.sent() + " sent" : "On";
+    }
+
     //! The settings. Game applies from the next game.
-    function settings() as WatchUi.Menu2 {
+    function settings(sync as PracticeSync) as WatchUi.Menu2 {
         var menu = new WatchUi.Menu2({:title => "Settings"});
         menu.addItem(new WatchUi.MenuItem("Game", formatSubLabel(Settings.format()), Settings.FORMAT, null));
         menu.addItem(new WatchUi.MenuItem("My position", positionSubLabel(Settings.myPosition()),
@@ -182,6 +212,7 @@ module Menus {
         menu.addItem(new WatchUi.ToggleMenuItem("My shots", states, Settings.SCORE_MINE, Settings.isOn(Settings.SCORE_MINE), null));
         states = {:enabled => "Ask after each end", :disabled => "Off"};
         menu.addItem(new WatchUi.ToggleMenuItem("End score", states, Settings.LINE_SCORE, Settings.isOn(Settings.LINE_SCORE), null));
+        menu.addItem(new WatchUi.MenuItem("curling.dimmit.net", syncStatus(sync), SYNC_ITEM, null));
         return menu;
     }
 
