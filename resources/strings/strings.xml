@@ -1,0 +1,26 @@
+<strings>
+    <string id="AppName">Curling Split Timer</string>
+    
+    <string id="brush_stroke_label">Brush strokes</string>
+    <string id="brush_stroke_graph_label">Total brush strokes</string>
+    <string id="brush_stroke_units">strokes</string>
+
+    <string id="split_label">Split</string>
+    <string id="split_chart">Splits</string>
+    <string id="end_split_label">Draw split</string>
+    <string id="end_points_label">Points</string>
+    <string id="points_for_label">Points for</string>
+    <string id="points_against_label">Points against</string>
+    <string id="lead_split_label">Lead draw split</string>
+    <string id="second_split_label">Second draw split</string>
+    <string id="vice_split_label">Vice draw split</string>
+    <string id="skip_split_label">Skip draw split</string>
+    <string id="me_split_label">Me draw split</string>
+    <string id="partner_split_label">Partner draw split</string>
+    <string id="my_shots_label">My shots made</string>
+    <string id="unit_seconds">s</string>
+    <string id="unit_points">pts</string>
+    <string id="unit_percent">%</string>
+    <string id="game_label">Game</string>
+    <string id="unit_none"> </string>
+</strings>

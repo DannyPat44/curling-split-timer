@@ -1,0 +1,8 @@
+# Build output and the simulator's screen captures
+bin/
+# Your own settings for make (see the README), such as KEY
+local.mk
+# The signing key, if kept here
+*.der
+.DS_Store
+build/

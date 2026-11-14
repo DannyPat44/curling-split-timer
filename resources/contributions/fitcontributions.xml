@@ -1,0 +1,36 @@
+ <fitContributions>
+        <fitField id="0" displayInChart="true" sortOrder = "0" precision="1"
+        chartTitle="@Strings.brush_stroke_graph_label" dataLabel="@Strings.brush_stroke_label"
+        unitLabel="@Strings.brush_stroke_units" fillColor="#FF0000" />
+        <fitField id="1" displayInActivityLaps="true" sortOrder = "1" precision="-1"
+        dataLabel="@Strings.brush_stroke_label" unitLabel="@Strings.brush_stroke_units"  />        
+        <fitField id="2" displayInActivitySummary="true" sortOrder = "2" precision="-1"
+        dataLabel="@Strings.brush_stroke_label" unitLabel="@Strings.brush_stroke_units"  />        
+
+        <fitField id="3" displayInChart="true" chartTitle="@Strings.split_chart" fillColor="#1F5BFF" sortOrder="3" precision="2"
+        dataLabel="@Strings.split_label" unitLabel="@Strings.unit_seconds" />
+        <fitField id="4" displayInActivityLaps="true" sortOrder="4" precision="2"
+        dataLabel="@Strings.end_split_label" unitLabel="@Strings.unit_seconds" />
+        <fitField id="5" displayInActivityLaps="true" sortOrder="5" precision="0"
+        dataLabel="@Strings.end_points_label" unitLabel="@Strings.unit_points" />
+        <fitField id="6" displayInActivitySummary="true" sortOrder="6" precision="0"
+        dataLabel="@Strings.points_for_label" unitLabel="@Strings.unit_points" />
+        <fitField id="7" displayInActivitySummary="true" sortOrder="7" precision="0"
+        dataLabel="@Strings.points_against_label" unitLabel="@Strings.unit_points" />
+        <fitField id="8" displayInActivitySummary="true" sortOrder="8" precision="2"
+        dataLabel="@Strings.lead_split_label" unitLabel="@Strings.unit_seconds" />
+        <fitField id="9" displayInActivitySummary="true" sortOrder="9" precision="2"
+        dataLabel="@Strings.second_split_label" unitLabel="@Strings.unit_seconds" />
+        <fitField id="10" displayInActivitySummary="true" sortOrder="10" precision="2"
+        dataLabel="@Strings.vice_split_label" unitLabel="@Strings.unit_seconds" />
+        <fitField id="11" displayInActivitySummary="true" sortOrder="11" precision="2"
+        dataLabel="@Strings.skip_split_label" unitLabel="@Strings.unit_seconds" />
+        <fitField id="16" displayInActivitySummary="true" sortOrder="16"
+        dataLabel="@Strings.game_label" unitLabel="@Strings.unit_none" />
+        <fitField id="17" displayInActivitySummary="true" sortOrder="17" precision="2"
+        dataLabel="@Strings.me_split_label" unitLabel="@Strings.unit_seconds" />
+        <fitField id="18" displayInActivitySummary="true" sortOrder="18" precision="2"
+        dataLabel="@Strings.partner_split_label" unitLabel="@Strings.unit_seconds" />
+        <fitField id="19" displayInActivitySummary="true" sortOrder="19" precision="0"
+        dataLabel="@Strings.my_shots_label" unitLabel="@Strings.unit_percent" />
+</fitContributions>
