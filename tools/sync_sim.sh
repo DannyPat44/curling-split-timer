@@ -1,9 +1,12 @@
 #!/bin/bash
-# Run the app in the simulator with your curling.dimmit.net sensor app key,
-# so timed rocks really go to your practice session. The key comes from the
-# macOS Keychain and is only written into bin/ (git-ignored), never source.
+# Run the app with your curling.dimmit.net sensor app key, so timed rocks
+# really go to your practice session: in the simulator, or (install) on a
+# USB-connected watch, for a sideloaded watch where Garmin Connect can't show
+# the app's settings. The key comes from the macOS Keychain and is only
+# written into bin/ (git-ignored), never source.
 #     security add-generic-password -a "$USER" -s curling.dimmit.net-sensor-key -w
 #     make sync-sim
+#     make sync-install
 set -e
 cd "$(dirname "$0")/.."
 key=$(security find-generic-password -a "$USER" -s curling.dimmit.net-sensor-key -w 2>/dev/null) || {
@@ -37,6 +40,17 @@ KEY ?= developer_key.der
 print-key: ; @echo $(KEY)
 MK
 )
-"${SDK}bin/monkeyc" -f bin/secrets/sync.jungle -d fr265 -y "$KEY" -o bin/Sync-fr265.prg -w
+DEVICE=${DEVICE:-fr265}
+if [ "$1" = install ]; then
+    # A release build, named like the plain one so it replaces it on the watch
+    mkdir -p bin/secrets/watch
+    "${SDK}bin/monkeyc" -f bin/secrets/sync.jungle -d "$DEVICE" -y "$KEY" -o bin/secrets/watch/Curling.prg -r -w
+    apps=$(mtp-folders 2>/dev/null | awk '$2 == "GARMIN" {g=1} g && $2 == "Apps" {print $1; exit}')
+    test -n "$apps" || { echo "Watch not found: plug it in and close Garmin Express/OpenMTP" >&2; exit 1; }
+    mtp-sendfile bin/secrets/watch/Curling.prg "$apps" > /dev/null
+    echo "Installed Curling.prg with practice timings on; unplug the watch"
+    exit 0
+fi
+"${SDK}bin/monkeyc" -f bin/secrets/sync.jungle -d "$DEVICE" -y "$KEY" -o bin/Sync-$DEVICE.prg -w
 pgrep -qf ConnectIQ.app || { "${SDK}bin/connectiq"; sleep 6; }
-"${SDK}bin/monkeydo" bin/Sync-fr265.prg fr265
+"${SDK}bin/monkeydo" bin/Sync-$DEVICE.prg "$DEVICE"
