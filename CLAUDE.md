@@ -66,6 +66,9 @@ and the `"positions"` count in a saved game) and test it.
 ## Install and publish
 
 - `make install` copies the build onto the USB-connected watch.
+- Publishing a new version and the listing's text and assets:
+  `store/README.md`. Store descriptions lead with the value to a curler, then
+  summarise what the app does.
 - `make package` builds the `.iq` for the Connect IQ store, for every watch
   in the manifest. A new watch needs its device files from the SDK Manager,
   a line in the manifest, a launcher icon size in the jungles if it isn't

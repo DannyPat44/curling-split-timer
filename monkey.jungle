@@ -1,7 +1,7 @@
 project.manifest = manifest.xml
 base.sourcePath = source;test
 # The demo setup is only in the demo build (demo.jungle)
-base.excludeAnnotations = demo
+base.excludeAnnotations = demo;video
 
 # Launcher icons drawn at each watch's size (make icon); 60 px is the default
 enduro3.resourcePath = $(enduro3.resourcePath);resources-icons/40

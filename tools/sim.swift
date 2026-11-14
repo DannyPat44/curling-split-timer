@@ -3,6 +3,7 @@
 //     swift tools/sim.swift press start|back|up|down|light
 //     swift tools/sim.swift hold up            (a long press: Up's menu key)
 //     swift tools/sim.swift shot out.png       (the simulator window)
+//     swift tools/sim.swift bounds x           (its x,y,w,h, for screencapture -R)
 // Needs Accessibility (to click) and Screen Recording (to capture) for the
 // terminal, in System Settings > Privacy & Security.
 import AppKit
@@ -35,7 +36,7 @@ func click(_ point: CGPoint, holdFor: Double) {
 }
 
 let args = CommandLine.arguments
-guard args.count >= 3, let win = simulatorWindow() else {
+guard args.count >= 2, let win = simulatorWindow() else {
     FileHandle.standardError.write("usage: sim.swift press|hold <button> | shot <file>; simulator must be open\n".data(using: .utf8)!)
     exit(1)
 }
@@ -46,6 +47,9 @@ case "press", "hold":
     usleep(150_000)
     let point = CGPoint(x: win.bounds.minX + fx * win.bounds.width, y: win.bounds.minY + fy * win.bounds.height)
     click(point, holdFor: args[1] == "hold" ? 1.5 : 0.08)
+case "bounds":
+    // The window as x,y,w,h in points, for screencapture -R
+    print("\(Int(win.bounds.minX)),\(Int(win.bounds.minY)),\(Int(win.bounds.width)),\(Int(win.bounds.height))")
 case "shot":
     let task = Process()
     task.executableURL = URL(fileURLWithPath: "/usr/sbin/screencapture")

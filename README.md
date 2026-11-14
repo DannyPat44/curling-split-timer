@@ -13,6 +13,9 @@ GPL 3.0.
 
 ![Sheet display](docs/sheet_face.png)
 
+Watch the 30-second demo: [a scripted game in the simulator](https://www.youtube.com/watch?v=r3viIWV5aks).
+Get it from the [Connect IQ Store](https://apps.garmin.com/apps/f6383df1-cbab-4387-85e0-7510400479f1).
+
 ## Features
 
 - Back-line-to-hog-line split timer, with a short buzz at each press.
@@ -34,8 +37,10 @@ GPL 3.0.
 
 ## Install
 
-Build it and copy it onto the watch over USB: see
-[Development](#development). (A Connect IQ store listing is on the way.)
+Get it from the [Connect IQ Store](https://apps.garmin.com/apps/f6383df1-cbab-4387-85e0-7510400479f1)
+in the Connect IQ app on your phone (while it's in Garmin's review, it may not
+show up yet). Or build it and copy it onto the watch over USB: see
+[Development](#development).
 
 Recommended: on the watch, set Settings > System > Display > During
 Activity > Timeout to Extended. The app turns the screen on whenever you
@@ -252,6 +257,7 @@ make package   # build the .iq for the Connect IQ store
 make icon      # redraw the launcher icons, one per watch size (tools/rock_icon.swift)
 make demo      # a demo game on one watch in the simulator (DEVICE=fr255 for another)
 make screens   # the demo on every supported watch, captured to bin/screens
+make video     # the store's demo video: a scripted game recorded with captions (tools/record_video.sh)
 make sim-tools # build bin/sim, which presses the simulator's buttons and captures the screen
 make fit       # the lap and summary fields of the newest simulator game (FIT=file for another)
 ```
@@ -279,6 +285,11 @@ flow, and `make screens` for every watch size.
 `Game`, `Accuracy`, `SplitTable`, `SweepCounter`, `Controls` and `KeyFilter`
 are plain classes with no device APIs, so they hold the logic and the tests;
 the rest connects them to the watch.
+
+## Publishing
+
+The store listing's text, images and video, and the steps for publishing a
+new version, are in [store/README.md](store/README.md).
 
 ## Licence
 
