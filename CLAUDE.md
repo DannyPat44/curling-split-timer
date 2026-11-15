@@ -20,6 +20,8 @@ to what the watch shows or records:
    For anything drawn on the game screen, also run `make screens` (the demo
    build on every watch, 218 to 454 px, MIP and AMOLED) and look at the
    captures; `swift tools/montage.swift out.png a.png b.png ...` lines them up.
+   Look at a montage rather than each capture, or hand the batch to the
+   `image-check` agent: every image read stays in context for the session.
 3. If the change touches the activity (`GameFields`, `fitcontributions.xml`,
    saving): save a game in the simulator and run `make fit` to see the lap and
    summary fields that were actually written.
